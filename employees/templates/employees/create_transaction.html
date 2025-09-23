@@ -1,0 +1,13 @@
+{% extends 'employees/base.html' %}
+
+{% block title %}Создать транзакцию{% endblock %}
+
+{% block content %}
+<h1>Создать транзакцию</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Создать</button>
+</form>
+<a href="{% url 'employee_list' %}">Вернуться к списку</a>
+{% endblock %}

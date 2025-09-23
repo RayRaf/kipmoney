@@ -1,0 +1,22 @@
+{% extends 'employees/base.html' %}
+
+{% block title %}Сотрудники{% endblock %}
+
+{% block content %}
+<h1>Сотрудники</h1>
+<a href="{% url 'create_employee' %}">Создать сотрудника</a> | <a href="{% url 'create_transaction' %}">Создать транзакцию</a>
+<table>
+    <tr>
+        <th>Имя</th>
+        <th>Баланс</th>
+        <th>Действия</th>
+    </tr>
+    {% for employee in employees %}
+    <tr>
+        <td>{{ employee.name }}</td>
+        <td class="balance">{{ employee.get_balance }} ₽</td>
+        <td><a href="{% url 'employee_detail' employee.pk %}">Просмотреть детали</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
