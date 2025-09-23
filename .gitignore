@@ -60,6 +60,7 @@ coverage.xml
 local_settings.py
 data/db.sqlite3
 data/db.sqlite3-journal
+staticfiles/
 
 # Flask stuff:
 instance/
