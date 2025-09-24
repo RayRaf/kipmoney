@@ -3,11 +3,10 @@ version: '3.8'
 services:
   web:
     build: .
+    env_file:
+      - .env
     volumes:
       - ./data:/app/data
-    environment:
-      - DEBUG=False
-      - SECRET_KEY=your-secret-key-here  # Замените на реальный секретный ключ
     networks:
       - app-network
 
