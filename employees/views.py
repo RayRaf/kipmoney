@@ -3,6 +3,10 @@ from django.contrib.auth.decorators import login_required
 from .models import Employee
 from .forms import TransactionForm, EmployeeForm
 
+def landing_page(request):
+    """Главная лендинг страница для отдела КИП"""
+    return render(request, 'employees/landing.html')
+
 @login_required
 def employee_list(request):
     employees = Employee.objects.all()
