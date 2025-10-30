@@ -25,27 +25,74 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            z-index: -2;
+            background: #0f0f1a;
+            z-index: -3;
         }
 
-        .parallax-bg::before {
-            content: '';
-            position: absolute;
+        /* Technical Schematic Background */
+        .schematic-bg {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%);
-            animation: bgMove 20s ease-in-out infinite;
+            z-index: -2;
+            overflow: hidden;
         }
 
-        @keyframes bgMove {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(50px, 50px); }
+        .schematic-layer {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background-image: 
+                /* Grid lines */
+                repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(0, 150, 255, 0.08) 49px, rgba(0, 150, 255, 0.08) 50px),
+                repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(0, 150, 255, 0.08) 49px, rgba(0, 150, 255, 0.08) 50px),
+                /* Diagonal technical lines */
+                repeating-linear-gradient(45deg, transparent, transparent 99px, rgba(0, 200, 255, 0.03) 99px, rgba(0, 200, 255, 0.03) 100px),
+                repeating-linear-gradient(-45deg, transparent, transparent 99px, rgba(0, 200, 255, 0.03) 99px, rgba(0, 200, 255, 0.03) 100px);
+            background-size: 50px 50px, 50px 50px, 100px 100px, 100px 100px;
+        }
+
+        /* Dark overlay for better text readability */
+        .parallax-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        /* Technical annotations */
+        .tech-annotations {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: rgba(0, 200, 255, 0.4);
+            font-weight: 600;
+        }
+
+        .annotation {
+            position: absolute;
+            white-space: nowrap;
+            opacity: 0;
+            animation: fadeInOut 8s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; transform: translateY(0); }
+            10%, 90% { opacity: 0.6; }
+            50% { opacity: 0.4; }
         }
 
         /* Animated particles */
@@ -82,6 +129,46 @@
                 transform: translateY(-100vh) translateX(100px);
                 opacity: 0;
             }
+        }
+
+        /* Electrical Circuit Canvas */
+        #circuit-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* Schematic symbols */
+        .schematic-symbols {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .symbol {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            font-weight: bold;
+            color: rgba(0, 200, 255, 0.35);
+            text-shadow: 0 0 8px rgba(0, 200, 255, 0.3);
+            opacity: 0;
+            animation: symbolPulse 6s infinite;
+        }
+
+        @keyframes symbolPulse {
+            0%, 100% { opacity: 0; }
+            10%, 90% { opacity: 0.5; }
+            50% { opacity: 0.35; }
         }
 
         /* Navigation */
@@ -128,11 +215,28 @@
             text-decoration: none;
             display: inline-block;
             box-shadow: 0 5px 20px rgba(0, 123, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
         }
 
         .login-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.6), 0 0 20px rgba(0, 255, 200, 0.4);
         }
 
         /* Hero Section */
@@ -151,11 +255,21 @@
             font-size: 72px;
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff, #00c6ff);
+            background: linear-gradient(135deg, #ffffff, #00c6ff, #00ffcc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: fadeInUp 1s ease;
+            animation: fadeInUp 1s ease, textGlow 3s ease-in-out infinite;
+            text-shadow: 0 0 40px rgba(0, 200, 255, 0.3);
+        }
+
+        @keyframes textGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 10px rgba(0, 200, 255, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 25px rgba(0, 255, 200, 0.8));
+            }
         }
 
         .hero p {
@@ -249,20 +363,39 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(0, 198, 255, 0.1));
+            background: linear-gradient(135deg, rgba(0, 200, 255, 0.1), rgba(0, 255, 200, 0.1));
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: -1;
         }
 
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00c6ff, #00ffcc, #0072ff, #00c6ff);
+            border-radius: 20px;
+            opacity: 0;
+            z-index: -2;
+            filter: blur(10px);
+            transition: opacity 0.4s ease;
+        }
+
         .card:hover {
             transform: translateY(-10px);
             border-color: rgba(0, 198, 255, 0.5);
-            box-shadow: 0 20px 60px rgba(0, 123, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 123, 255, 0.3), 0 0 40px rgba(0, 255, 200, 0.2);
         }
 
         .card:hover::before {
             opacity: 1;
+        }
+
+        .card:hover::after {
+            opacity: 0.3;
         }
 
         .card-icon {
@@ -367,12 +500,33 @@
             border: 1px solid rgba(0, 198, 255, 0.3);
             font-size: 18px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 200, 0.3), transparent);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .tech-item:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .tech-item:hover {
             background: rgba(0, 198, 255, 0.1);
             border-color: #00c6ff;
             transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 200, 255, 0.3);
         }
 
         /* Footer */
@@ -442,8 +596,22 @@
     <!-- Parallax Background -->
     <div class="parallax-bg"></div>
 
-    <!-- Animated Particles -->
-    <div class="particles" id="particles"></div>
+    <!-- Technical Schematic Background -->
+    <div class="schematic-bg">
+        <div class="schematic-layer"></div>
+    </div>
+
+    <!-- Schematic Symbols (technical abbreviations) -->
+    <div class="schematic-symbols" id="schematic-symbols"></div>
+
+    <!-- Technical Annotations -->
+    <div class="tech-annotations" id="tech-annotations"></div>
+
+    <!-- Dark Overlay for text readability -->
+    <div class="parallax-overlay"></div>
+
+    <!-- Electrical Circuit Canvas -->
+    <canvas id="circuit-canvas"></canvas>
 
     <!-- Navigation -->
     <nav id="navbar">
@@ -546,15 +714,44 @@
     </footer>
 
     <script>
-        // Parallax effect on scroll
+        // Technical abbreviations for KIP and automation
+        const technicalTerms = [
+            'PID', 'IEC 61131', 'SCADA', 'DCS', 'HMI', 'PLC', 'RTU', 'I/O',
+            'Modbus', '4-20mA', 'HART', 'Profibus', 'OPC UA', 'P&ID',
+            'FBD', 'LD', 'SFC', 'ST', 'IL', 'PROFINET', 'EtherNet/IP',
+            'DeviceNet', 'AS-i', 'CANopen', 'Foundation FF', 'WirelessHART',
+            'ISA-95', 'ISA-88', 'IEC 61508', 'SIL', 'ATEX', 'NAMUR',
+            'GOST', 'EAC', 'CE', 'UL', 'ANSI/ISA', 'NFPA', 'IEEE',
+            'Pt100', 'Pt1000', 'K-type', 'J-type', 'LVDT', 'RVDT',
+            'Flow', 'Press', 'Temp', 'Level', 'pH', 'ORP', 'DO',
+            'VI', 'AI', 'AO', 'DI', 'DO', 'TC', 'RTD', 'PWM'
+        ];
+
+        // Parallax effect on scroll with enhanced movement
         let scrollPosition = 0;
+        let ticking = false;
         
-        window.addEventListener('scroll', () => {
+        function updateParallax() {
             scrollPosition = window.pageYOffset;
             
-            // Parallax background
-            const parallaxBg = document.querySelector('.parallax-bg');
-            parallaxBg.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+            // Enhanced parallax for schematic background (slower movement)
+            const schematicBg = document.querySelector('.schematic-layer');
+            if (schematicBg) {
+                schematicBg.style.transform = `translate(${scrollPosition * 0.15}px, ${scrollPosition * 0.25}px)`;
+            }
+            
+            // Parallax for overlay (different speed)
+            const overlay = document.querySelector('.parallax-overlay');
+            if (overlay) {
+                overlay.style.transform = `translateY(${scrollPosition * 0.1}px)`;
+            }
+            
+            // Parallax for symbols (medium speed)
+            const symbols = document.querySelectorAll('.symbol');
+            symbols.forEach((symbol, index) => {
+                const speed = 0.2 + (index % 3) * 0.1;
+                symbol.style.transform = `translateY(${scrollPosition * speed}px)`;
+            });
             
             // Navbar background on scroll
             const navbar = document.getElementById('navbar');
@@ -575,6 +772,15 @@
                     card.style.transform = 'translateY(0)';
                 }
             });
+            
+            ticking = false;
+        }
+        
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
         });
         
         // Initialize card animations
@@ -586,16 +792,44 @@
                 card.style.transition = `all 0.6s ease ${index * 0.1}s`;
             });
             
-            // Create animated particles
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particlesContainer.appendChild(particle);
+            // Create technical symbols
+            const symbolsContainer = document.getElementById('schematic-symbols');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            for (let i = 0; i < 40; i++) {
+                const symbol = document.createElement('div');
+                symbol.className = 'symbol';
+                symbol.textContent = technicalTerms[Math.floor(Math.random() * technicalTerms.length)];
+                symbol.style.left = Math.random() * windowWidth + 'px';
+                symbol.style.top = Math.random() * (windowHeight * 2) + 'px';
+                symbol.style.animationDelay = Math.random() * 6 + 's';
+                symbol.style.fontSize = (11 + Math.random() * 4) + 'px';
+                symbolsContainer.appendChild(symbol);
             }
+            
+            // Create technical annotations (like on blueprints)
+            const annotationsContainer = document.getElementById('tech-annotations');
+            const annotations = [
+                { text: '→ CONTROL LOOP', top: '15%', left: '5%' },
+                { text: 'SIGNAL PATH ←', top: '25%', left: '85%' },
+                { text: '┌─ INPUT MODULE', top: '40%', left: '10%' },
+                { text: 'OUTPUT MODULE ─┐', top: '55%', left: '80%' },
+                { text: '↓ DATA BUS', top: '70%', left: '15%' },
+                { text: 'POWER SUPPLY ↑', top: '85%', left: '75%' },
+                { text: '═══ FIELDBUS', top: '35%', left: '60%' },
+                { text: 'SENSOR NET ═══', top: '65%', left: '25%' }
+            ];
+            
+            annotations.forEach((ann, index) => {
+                const annotation = document.createElement('div');
+                annotation.className = 'annotation';
+                annotation.textContent = ann.text;
+                annotation.style.top = ann.top;
+                annotation.style.left = ann.left;
+                annotation.style.animationDelay = (index * 1) + 's';
+                annotationsContainer.appendChild(annotation);
+            });
             
             // Smooth reveal on load
             setTimeout(() => {
@@ -603,17 +837,43 @@
             }, 100);
         });
         
-        // Mouse move parallax effect
+        // Enhanced mouse move parallax effect
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+        
         document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth - 0.5;
-            const mouseY = e.clientY / window.innerHeight - 0.5;
-            
-            const particles = document.querySelectorAll('.particle');
-            particles.forEach((particle, index) => {
-                const speed = (index % 3 + 1) * 20;
-                particle.style.transform = `translate(${mouseX * speed}px, ${mouseY * speed}px)`;
-            });
+            targetX = e.clientX / window.innerWidth - 0.5;
+            targetY = e.clientY / window.innerHeight - 0.5;
         });
+        
+        function animateMouseParallax() {
+            // Smooth interpolation
+            mouseX += (targetX - mouseX) * 0.05;
+            mouseY += (targetY - mouseY) * 0.05;
+            
+            // Apply to schematic layer
+            const schematicBg = document.querySelector('.schematic-layer');
+            if (schematicBg) {
+                const currentTransform = schematicBg.style.transform;
+                const scrollY = scrollPosition * 0.25;
+                const scrollX = scrollPosition * 0.15;
+                schematicBg.style.transform = `translate(${scrollX + mouseX * 30}px, ${scrollY + mouseY * 30}px)`;
+            }
+            
+            // Apply to symbols with varying speeds
+            const symbols = document.querySelectorAll('.symbol');
+            symbols.forEach((symbol, index) => {
+                const speed = 10 + (index % 5) * 5;
+                const currentY = scrollPosition * (0.2 + (index % 3) * 0.1);
+                symbol.style.transform = `translate(${mouseX * speed}px, ${currentY + mouseY * speed}px)`;
+            });
+            
+            requestAnimationFrame(animateMouseParallax);
+        }
+        
+        animateMouseParallax();
         
         // Counter animation for stats
         const animateCounter = (element, target, duration = 2000) => {
@@ -660,6 +920,323 @@
         if (achievementsSection) {
             statsObserver.observe(achievementsSection);
         }
+
+        // ============================================
+        // TECHNICAL SCHEMATIC CIRCUIT ANIMATION
+        // ============================================
+        
+        class TechnicalSchematic {
+            constructor() {
+                this.canvas = document.getElementById('circuit-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+                this.nodes = [];
+                this.connections = [];
+                this.signals = [];
+                
+                this.init();
+                this.animate();
+                this.addEventListeners();
+            }
+            
+            init() {
+                this.resize();
+                this.createSchematicNodes();
+                this.createConnections();
+            }
+            
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createSchematicNodes() {
+                // Create a more structured grid for technical schematics
+                const cols = Math.floor(this.canvas.width / 200);
+                const rows = Math.floor(this.canvas.height / 200);
+                const offsetX = (this.canvas.width - (cols - 1) * 200) / 2;
+                const offsetY = (this.canvas.height - (rows - 1) * 200) / 2;
+                
+                const nodeTypes = ['junction', 'component', 'terminal', 'ground'];
+                
+                for (let i = 0; i < cols; i++) {
+                    for (let j = 0; j < rows; j++) {
+                        this.nodes.push({
+                            x: offsetX + i * 200,
+                            y: offsetY + j * 200,
+                            baseX: offsetX + i * 200,
+                            baseY: offsetY + j * 200,
+                            radius: 4,
+                            active: false,
+                            pulse: Math.random() * Math.PI * 2,
+                            type: nodeTypes[Math.floor(Math.random() * nodeTypes.length)],
+                            symbol: this.getRandomSymbol()
+                        });
+                    }
+                }
+            }
+            
+            getRandomSymbol() {
+                const symbols = ['R', 'C', 'L', 'T', 'S', 'M', 'V', 'A'];
+                return symbols[Math.floor(Math.random() * symbols.length)];
+            }
+            
+            createConnections() {
+                // Create more structured, grid-aligned connections
+                for (let i = 0; i < this.nodes.length; i++) {
+                    for (let j = i + 1; j < this.nodes.length; j++) {
+                        const dist = this.distance(this.nodes[i], this.nodes[j]);
+                        const dx = Math.abs(this.nodes[i].x - this.nodes[j].x);
+                        const dy = Math.abs(this.nodes[i].y - this.nodes[j].y);
+                        
+                        // Prefer horizontal or vertical connections for technical look
+                        if ((dist < 220 && (dx < 10 || dy < 10)) || (dist < 210 && Math.random() > 0.7)) {
+                            this.connections.push({
+                                from: this.nodes[i],
+                                to: this.nodes[j],
+                                active: false,
+                                signal: 0,
+                                isOrthogonal: dx < 10 || dy < 10
+                            });
+                        }
+                    }
+                }
+            }
+            
+            distance(p1, p2) {
+                const dx = p1.x - p2.x;
+                const dy = p1.y - p2.y;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+            
+            addEventListeners() {
+                window.addEventListener('resize', () => this.resize());
+                
+                document.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                });
+                
+                // Create signals periodically
+                setInterval(() => {
+                    if (this.connections.length > 0) {
+                        const conn = this.connections[Math.floor(Math.random() * this.connections.length)];
+                        if (conn.active) {
+                            this.createSignal(conn);
+                        }
+                    }
+                }, 150);
+            }
+            
+            createSignal(connection) {
+                this.signals.push({
+                    connection: connection,
+                    progress: 0,
+                    speed: 0.008 + Math.random() * 0.012,
+                    size: 2.5,
+                    color: Math.random() > 0.5 ? 'cyan' : 'lime'
+                });
+            }
+            
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                
+                // Clear with slight fade for trails
+                this.ctx.fillStyle = 'rgba(15, 15, 26, 0.15)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Update node activation
+                this.nodes.forEach(node => {
+                    const dist = this.distance(node, this.mouse);
+                    node.active = dist < 300;
+                    node.pulse += 0.03;
+                });
+                
+                // Draw connections
+                this.connections.forEach(conn => {
+                    const dist = Math.min(
+                        this.distance(conn.from, this.mouse),
+                        this.distance(conn.to, this.mouse)
+                    );
+                    
+                    conn.active = dist < 300;
+                    
+                    if (conn.active) {
+                        conn.signal = Math.min(conn.signal + 0.08, 1);
+                    } else {
+                        conn.signal = Math.max(conn.signal - 0.04, 0);
+                    }
+                    
+                    if (conn.signal > 0) {
+                        this.drawConnection(conn);
+                    }
+                });
+                
+                // Draw nodes
+                this.nodes.forEach(node => {
+                    if (node.active || Math.random() > 0.95) {
+                        this.drawNode(node);
+                    }
+                });
+                
+                // Update and draw signals
+                for (let i = this.signals.length - 1; i >= 0; i--) {
+                    const signal = this.signals[i];
+                    signal.progress += signal.speed;
+                    
+                    if (signal.progress >= 1) {
+                        this.signals.splice(i, 1);
+                    } else {
+                        this.drawSignal(signal);
+                    }
+                }
+            }
+            
+            drawConnection(conn) {
+                const alpha = conn.signal * 0.4;
+                
+                // Draw main line - thinner for technical look
+                this.ctx.beginPath();
+                this.ctx.moveTo(conn.from.x, conn.from.y);
+                
+                // Orthogonal routing for technical schematic look
+                if (conn.isOrthogonal) {
+                    this.ctx.lineTo(conn.to.x, conn.to.y);
+                } else {
+                    // Manhattan routing (right angles)
+                    const midX = (conn.from.x + conn.to.x) / 2;
+                    this.ctx.lineTo(midX, conn.from.y);
+                    this.ctx.lineTo(midX, conn.to.y);
+                    this.ctx.lineTo(conn.to.x, conn.to.y);
+                }
+                
+                this.ctx.strokeStyle = `rgba(0, 200, 255, ${alpha})`;
+                this.ctx.lineWidth = 1.5;
+                this.ctx.stroke();
+                
+                // Add subtle glow for active connections
+                if (conn.signal > 0.6) {
+                    this.ctx.strokeStyle = `rgba(0, 255, 200, ${alpha * 0.3})`;
+                    this.ctx.lineWidth = 3;
+                    this.ctx.stroke();
+                }
+            }
+            
+            drawNode(node) {
+                const pulseSize = Math.sin(node.pulse) * 0.3 + 0.7;
+                const size = node.radius * pulseSize;
+                
+                // Draw different node types
+                this.ctx.strokeStyle = node.active 
+                    ? `rgba(0, 220, 255, 0.8)` 
+                    : 'rgba(100, 150, 200, 0.4)';
+                this.ctx.fillStyle = node.active 
+                    ? `rgba(0, 200, 255, 0.3)` 
+                    : 'rgba(50, 100, 150, 0.2)';
+                this.ctx.lineWidth = 1.5;
+                
+                switch(node.type) {
+                    case 'junction':
+                        // Circle junction
+                        this.ctx.beginPath();
+                        this.ctx.arc(node.x, node.y, size, 0, Math.PI * 2);
+                        this.ctx.fill();
+                        this.ctx.stroke();
+                        break;
+                        
+                    case 'component':
+                        // Rectangle component
+                        this.ctx.beginPath();
+                        this.ctx.rect(node.x - size * 2, node.y - size, size * 4, size * 2);
+                        this.ctx.fill();
+                        this.ctx.stroke();
+                        
+                        // Draw symbol inside if active
+                        if (node.active) {
+                            this.ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                            this.ctx.font = '10px Courier New';
+                            this.ctx.textAlign = 'center';
+                            this.ctx.textBaseline = 'middle';
+                            this.ctx.fillText(node.symbol, node.x, node.y);
+                        }
+                        break;
+                        
+                    case 'terminal':
+                        // Triangle terminal
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(node.x, node.y - size * 1.5);
+                        this.ctx.lineTo(node.x - size * 1.3, node.y + size * 0.8);
+                        this.ctx.lineTo(node.x + size * 1.3, node.y + size * 0.8);
+                        this.ctx.closePath();
+                        this.ctx.fill();
+                        this.ctx.stroke();
+                        break;
+                        
+                    case 'ground':
+                        // Ground symbol
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(node.x, node.y - size);
+                        this.ctx.lineTo(node.x, node.y + size);
+                        this.ctx.moveTo(node.x - size * 1.5, node.y + size);
+                        this.ctx.lineTo(node.x + size * 1.5, node.y + size);
+                        this.ctx.moveTo(node.x - size, node.y + size * 1.5);
+                        this.ctx.lineTo(node.x + size, node.y + size * 1.5);
+                        this.ctx.moveTo(node.x - size * 0.5, node.y + size * 2);
+                        this.ctx.lineTo(node.x + size * 0.5, node.y + size * 2);
+                        this.ctx.stroke();
+                        break;
+                }
+            }
+            
+            drawSignal(signal) {
+                const conn = signal.connection;
+                let x, y;
+                
+                // Calculate position along path
+                if (conn.isOrthogonal) {
+                    x = conn.from.x + (conn.to.x - conn.from.x) * signal.progress;
+                    y = conn.from.y + (conn.to.y - conn.from.y) * signal.progress;
+                } else {
+                    // Manhattan routing
+                    const midX = (conn.from.x + conn.to.x) / 2;
+                    if (signal.progress < 0.33) {
+                        const p = signal.progress / 0.33;
+                        x = conn.from.x + (midX - conn.from.x) * p;
+                        y = conn.from.y;
+                    } else if (signal.progress < 0.66) {
+                        const p = (signal.progress - 0.33) / 0.33;
+                        x = midX;
+                        y = conn.from.y + (conn.to.y - conn.from.y) * p;
+                    } else {
+                        const p = (signal.progress - 0.66) / 0.34;
+                        x = midX + (conn.to.x - midX) * p;
+                        y = conn.to.y;
+                    }
+                }
+                
+                // Draw signal pulse
+                const color = signal.color === 'cyan' ? '0, 255, 255' : '0, 255, 100';
+                
+                this.ctx.shadowBlur = 8;
+                this.ctx.shadowColor = `rgba(${color}, 0.8)`;
+                
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, signal.size, 0, Math.PI * 2);
+                this.ctx.fillStyle = `rgba(${color}, 0.9)`;
+                this.ctx.fill();
+                
+                // Outer glow
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, signal.size * 2, 0, Math.PI * 2);
+                this.ctx.fillStyle = `rgba(${color}, 0.3)`;
+                this.ctx.fill();
+                
+                this.ctx.shadowBlur = 0;
+            }
+        }
+        
+        // Initialize technical schematic animation
+        const schematic = new TechnicalSchematic();
     </script>
 </body>
 </html>
