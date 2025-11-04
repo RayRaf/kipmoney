@@ -47,27 +47,27 @@
             width: 120%;
             height: 120%;
             background-image: 
-                /* Grid lines - ПАРАМЕТР: последнее число (0.18) - яркость сетки (0.1-0.3) */
-                repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(0, 150, 255, 0.18) 49px, rgba(0, 150, 255, 0.18) 50px),
-                repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(0, 150, 255, 0.18) 49px, rgba(0, 150, 255, 0.18) 50px),
-                /* Diagonal technical lines - ПАРАМЕТР: последнее число (0.08) - яркость диагоналей (0.03-0.15) */
-                repeating-linear-gradient(45deg, transparent, transparent 99px, rgba(0, 200, 255, 0.08) 99px, rgba(0, 200, 255, 0.08) 100px),
-                repeating-linear-gradient(-45deg, transparent, transparent 99px, rgba(0, 200, 255, 0.08) 99px, rgba(0, 200, 255, 0.08) 100px);
+                /* Grid lines - ПАРАМЕТР: последнее число (0.25) - яркость сетки (0.1-0.3) */
+                repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(0, 150, 255, 0.25) 49px, rgba(0, 150, 255, 0.25) 50px),
+                repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(0, 150, 255, 0.25) 49px, rgba(0, 150, 255, 0.25) 50px),
+                /* Diagonal technical lines - ПАРАМЕТР: последнее число (0.12) - яркость диагоналей (0.03-0.15) */
+                repeating-linear-gradient(45deg, transparent, transparent 99px, rgba(0, 200, 255, 0.12) 99px, rgba(0, 200, 255, 0.12) 100px),
+                repeating-linear-gradient(-45deg, transparent, transparent 99px, rgba(0, 200, 255, 0.12) 99px, rgba(0, 200, 255, 0.12) 100px);
             background-size: 50px 50px, 50px 50px, 100px 100px, 100px 100px;
         }
 
-        /* Dark overlay for better text readability - ПАРАМЕТР: 0.4 - затемнение фона (0.2-0.7) */
+        /* Dark overlay for better text readability - ПАРАМЕТР: 0.35 - затемнение фона (0.2-0.7) */
         .parallax-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.35);
             z-index: -1;
         }
 
-        /* Technical annotations - ПАРАМЕТР: 0.65 в color - яркость аннотаций (0.4-0.9) */
+        /* Technical annotations - ПАРАМЕТР: 0.75 в color - яркость аннотаций (0.4-0.9) */
         .tech-annotations {
             position: fixed;
             top: 0;
@@ -78,7 +78,7 @@
             pointer-events: none;
             font-family: 'Courier New', monospace;
             font-size: 11px;
-            color: rgba(0, 200, 255, 0.65);
+            color: rgba(0, 200, 255, 0.75);
             font-weight: 600;
         }
 
@@ -89,11 +89,11 @@
             animation: fadeInOut 8s infinite;
         }
 
-        /* ПАРАМЕТР: opacity в 10%/90% (0.75) и 50% (0.6) - яркость мерцания (0.5-0.9) */
+        /* ПАРАМЕТР: opacity в 10%/90% (0.85) и 50% (0.7) - яркость мерцания (0.5-0.9) */
         @keyframes fadeInOut {
             0%, 100% { opacity: 0; transform: translateY(0); }
-            10%, 90% { opacity: 0.75; }
-            50% { opacity: 0.6; }
+            10%, 90% { opacity: 0.85; }
+            50% { opacity: 0.7; }
         }
 
         /* Animated particles */
@@ -155,24 +155,24 @@
             pointer-events: none;
         }
 
-        /* ПАРАМЕТР: color 0.6 - базовая яркость символов (0.3-0.8) */
-        /* ПАРАМЕТР: text-shadow 0.5 - свечение символов (0.3-0.7) */
+        /* ПАРАМЕТР: color 0.72 - базовая яркость символов (0.3-0.8) */
+        /* ПАРАМЕТР: text-shadow 0.6 - свечение символов (0.3-0.7) */
         .symbol {
             position: absolute;
             font-family: 'Courier New', monospace;
             font-size: 13px;
             font-weight: bold;
-            color: rgba(0, 200, 255, 0.6);
-            text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+            color: rgba(0, 200, 255, 0.72);
+            text-shadow: 0 0 12px rgba(0, 200, 255, 0.6);
             opacity: 0;
             animation: symbolPulse 6s infinite;
         }
 
-        /* ПАРАМЕТР: opacity в 10%/90% (0.7) и 50% (0.55) - яркость пульсации символов */
+        /* ПАРАМЕТР: opacity в 10%/90% (0.8) и 50% (0.65) - яркость пульсации символов */
         @keyframes symbolPulse {
             0%, 100% { opacity: 0; }
-            10%, 90% { opacity: 0.7; }
-            50% { opacity: 0.55; }
+            10%, 90% { opacity: 0.8; }
+            50% { opacity: 0.65; }
         }
 
         /* Navigation */
