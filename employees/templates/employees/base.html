@@ -10,7 +10,6 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            overflow: hidden;
         }
         #large-header {
             position: fixed;
@@ -100,6 +99,63 @@
         nav {
             text-align: right;
             margin-bottom: 20px;
+        }
+        .table-container {
+            max-height: 600px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+        }
+        .table-container::-webkit-scrollbar {
+            width: 10px;
+        }
+        .table-container::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+        .table-container::-webkit-scrollbar-thumb {
+            background: #007bff;
+            border-radius: 5px;
+        }
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #0056b3;
+        }
+        .pagination {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .page-info {
+            display: block;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .page-link {
+            padding: 8px 12px;
+            background: #007bff;
+            color: #ffffff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .page-link:hover {
+            background: #0056b3;
+            box-shadow: 0 0 10px #007bff;
+        }
+        .page-current {
+            padding: 8px 12px;
+            background: #0056b3;
+            color: #ffffff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            font-weight: bold;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
