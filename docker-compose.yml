@@ -10,5 +10,10 @@ services:
     expose:
       - "8000"
     volumes:
-      - ./data:/app/data
+      - kipmoney_data:/app/data
     restart: unless-stopped
+
+volumes:
+  kipmoney_data:
+    external: true
+    name: kipmoney_data
